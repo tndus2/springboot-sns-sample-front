@@ -40,7 +40,7 @@ export function useAuth() {
       window.location.href = '/login'
     },
   })
-
+  // 회원가입 함수
   const signupMutation = useMutation({
     mutationFn: (data: UserSignupRequest) => usersApi.signup(data),
     onSuccess: () => {
@@ -53,6 +53,12 @@ export function useAuth() {
     },
   })
 
+  // 타입스트림트 : 자바스크립트에 타입만 얹는 언어
+  // 에러를 실행 전에 잡아주는 역할을 해줌 , 기존 자바스크립트에 타입을 추가해줘었기 떄문에
+  // 아래의 return 은 함수를 객체로 묶어서 반환하는 형태
+  // > 커스텀 훅 처럼 쓰거나 api로 상태를 함계 넘기기 위함
+  // 즉, 순수 자바스크립트 객체 형태 반환
+  // isPending 해당 함수의 요청이 처리중인지 아닌지 상태를 알려주는 함수값
   return {
     user,
     isLoading,
@@ -65,3 +71,9 @@ export function useAuth() {
     isSignupPending: signupMutation.isPending,
   }
 }
+
+// .tsx : ui담당
+// .ts : 훅/로직 담당
+// .tsx에서 버튼에 isSignupPending 을 임포트하고 호출하는거 같지만
+// 실제함수명칭은 signupMutation - 실제 api 연결 함수 해당 함수를 호출
+// isSignupPending 는 해당 함수의처리 상태값을 담은 반환값

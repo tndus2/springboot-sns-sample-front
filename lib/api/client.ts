@@ -1,5 +1,14 @@
 import { ApiError } from '@/lib/types'
 
+// function getXsrfToken() {
+//    const raw =document.cookie
+//       .split('; ')
+//       .find(row => row.startsWith('XSRF-TOKEN='))
+//       ?.split('=')[1];
+//
+//   return raw ? decodeURIComponent(raw) : undefined;
+// }
+
 export class ApiClient {
   private baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080'
 
@@ -10,7 +19,8 @@ export class ApiClient {
       ...options,
       credentials: 'include', // 쿠키 기반 세션을 위해 필요
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'applicati9on/json',
+        // ...(getXsrfToken() && { 'XSRF-TOKEN': getXsrfToken() }),
         ...options?.headers,
       },
     })
@@ -50,14 +60,23 @@ export class ApiClient {
     }
 
     // JSON 응답 파싱
+  //   const text = await response.text()
+  //   if (!text) {
+  //     return undefined as T
+  //   }
+  //   try {
+  //     return JSON.parse(text)
+  //   } catch {
+  //     return undefined as T
+  //   }
+
     const text = await response.text()
     if (!text) {
-      return undefined as T
-    }
-    try {
+      return null as T   // 🔥 undefined → null 로 변경
+    }try {
       return JSON.parse(text)
     } catch {
-      return undefined as T
+      return null as T   // 🔥 undefined 말고 null
     }
   }
 
