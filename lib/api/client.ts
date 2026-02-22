@@ -19,7 +19,8 @@ export class ApiClient {
       ...options,
       credentials: 'include', // 쿠키 기반 세션을 위해 필요
       headers: {
-        'Content-Type': 'applicati9on/json',
+        'Content-Type': 'application/json',
+        // JSON 요청이 서버에서 파싱되도록 Content-Type 오타를 수정함
         // ...(getXsrfToken() && { 'XSRF-TOKEN': getXsrfToken() }),
         ...options?.headers,
       },

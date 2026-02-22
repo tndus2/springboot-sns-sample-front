@@ -15,11 +15,8 @@ export interface AuthSessionsResponse {
 
 export const authApi = {
   login: (username: string, password: string) => {
-    const formData = new URLSearchParams()
-    formData.append('username', username)
-    formData.append('password', password)
-
-    return apiClient.postForm<void>('/api/v1/login', formData)
+    // 백엔드 로그인 엔드포인트와 요청 타입(JSON)에 맞추기 위해 수정함
+    return apiClient.post<void>('/api/v1/users/login', { username, password })
   },
 
   logout: () => {
