@@ -5,6 +5,7 @@ import { toast } from 'sonner'
 import { postsApi } from '@/lib/api/posts'
 import type { Post, PostCreateRequest, PostUpdateRequest } from '@/lib/types'
 
+// 2026-08-17: 게시물 전체 목록 조회용 React Query 훅이다.
 export function usePosts() {
   return useQuery({
     queryKey: ['posts'],
@@ -12,6 +13,7 @@ export function usePosts() {
   })
 }
 
+// 2026-08-17: 게시물 상세 페이지에서 postId 기준 단건 게시물을 조회하는 훅이다.
 export function usePost(id: number | null) {
   return useQuery({
     queryKey: ['posts', id],
@@ -20,6 +22,7 @@ export function usePost(id: number | null) {
   })
 }
 
+// 2026-08-17: 홈 작성 UI에서 게시물 생성 후 관련 목록 캐시를 무효화하는 mutation 훅이다.
 export function useCreatePost() {
   const queryClient = useQueryClient()
 
@@ -39,6 +42,7 @@ export function useCreatePost() {
   })
 }
 
+// 2026-08-17: 게시물 수정 후 단건/목록 캐시를 갱신하는 mutation 훅이다.
 export function useUpdatePost() {
   const queryClient = useQueryClient()
 
@@ -62,6 +66,7 @@ export function useUpdatePost() {
 // 세션 내 조회된 게시글 ID 추적 (중복 조회 방지)
 const viewedPostIds = new Set<number>()
 
+// 2026-08-17: 같은 세션에서 중복 증가를 피하면서 게시물 조회수 증가 API를 호출하는 훅이다.
 export function useIncrementView() {
   return useMutation({
     mutationFn: (id: number) => {
@@ -75,6 +80,7 @@ export function useIncrementView() {
   })
 }
 
+// 2026-08-17: 게시물 삭제 시 목록에서 즉시 제거하고, 실패하면 롤백하는 mutation 훅이다.
 export function useDeletePost() {
   const queryClient = useQueryClient()
 

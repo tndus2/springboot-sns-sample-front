@@ -23,8 +23,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="ko" className="dark">
-      <body className={`font-sans antialiased`}>
+    // 브라우저 확장프로그램이나 클라이언트 초기화 과정에서 html/body 속성이 먼저 바뀌면
+    // Next.js hydration warning 이 자주 발생하므로 루트에서 경고를 억제한다.
+    <html lang="ko" className="dark" suppressHydrationWarning>
+      <body className={`font-sans antialiased`} suppressHydrationWarning>
         <Providers>
           {children}
         </Providers>

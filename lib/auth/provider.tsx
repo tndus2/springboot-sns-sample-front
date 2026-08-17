@@ -22,7 +22,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   })
 
   // user가 유효한 객체인지 확인 (id와 username이 있어야 함)
-  const isValidUser = user && typeof user.id === 'number' && typeof user.username === 'string'
+  // useQuery enabled 옵션 등에 그대로 전달되므로 항상 boolean 으로 계산해야 한다.
+  const isValidUser = !!user && typeof user.id === 'number' && typeof user.username === 'string'
 
   const value: AuthContextType = {
     user: isValidUser ? user : null,

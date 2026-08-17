@@ -144,7 +144,12 @@ export function ImageLightbox({ images, initialIndex, onClose }: ImageLightboxPr
       {/* Header */}
       <div className="absolute top-0 left-0 right-0 flex items-center justify-between p-4 z-10">
         <button
-          onClick={onClose}
+          onClick={(e) => {
+            // 2026-08-17: 라이트박스 닫기 클릭이 뒤쪽 게시물 카드의 onClick 으로 전파되면
+            // 의도치 않게 /post/{id} 상세 이동이 발생하므로 전파를 여기서 끊는다.
+            e.stopPropagation()
+            onClose()
+          }}
           className="p-2 rounded-full bg-black/50 hover:bg-black/70 transition-colors"
         >
           <X className="w-6 h-6 text-white" />
